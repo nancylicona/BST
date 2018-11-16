@@ -1,4 +1,3 @@
-
 /*  BST312.h
   CS 312 Fall 2018
 
@@ -147,19 +146,19 @@ private:
 ********************************/
 
 template<class ItemType>
-BST_312<ItemType>::BST_312 ()
+BST_312<ItemType>::BST_312 ()       //constructor
 {
     root = NULL;
 }
 
 template<class ItemType>
-BST_312<ItemType>::BST_312(const BST_312 & src)
+BST_312<ItemType>::BST_312(const BST_312 & src)     //copy constructor
 {
     copyTree(root, src.root);
 }
 
 template<class ItemType>
-BST_312<ItemType>::~BST_312()
+BST_312<ItemType>::~BST_312()       //destructor
 {
     makeEmpty();
 
@@ -169,15 +168,15 @@ BST_312<ItemType>::~BST_312()
 template<class ItemType>
 void BST_312<ItemType>::copyTree(TreeNode*& copy, const TreeNode* originalTree)
 {
-    if (originalTree == NULL)
-        copy = NULL;
+    if (originalTree == NULL)           //IF original tree is empty..
+        copy = NULL;                    //THEN copy tree is set as empty.
     else
     {
-        copy = new TreeNode;
-        copy->data = originalTree->data;
+        copy = new TreeNode;            //create new tree..
+        copy->data = originalTree->data;            //copy the data from node
 
-        copyTree(copy->left, originalTree->left);
-        copyTree(copy->right, originalTree->right);
+        copyTree(copy->left, originalTree->left);   //recursively: copy all the left side of the original tree...
+        copyTree(copy->right, originalTree->right); //...and then copy all the right side of the original tree.
     }
 }
 
@@ -188,23 +187,23 @@ void BST_312 <ItemType>::deleteNode(TreeNode*& t)
     ItemType info;
     TreeNode *tempPtr;
 
-    tempPtr = t;
+    tempPtr = t;            //set temporary to point to the node send
 
-    if (t->left == NULL)
+    if (t->left == NULL)            //assign pointer to the right node and delete present node
     {
         t = t->right;
         delete tempPtr;
     }
-    else if (t->right == NULL)
+    else if (t->right == NULL)      //assign pointer to the left node and delete present node
     {
         t = t->left;
         delete tempPtr;
     }
     else
     {
-        getPredecessor(t->left, info);
-        t->data = info;
-        deleteItem(t->left, info);
+        getPredecessor(t->left, info);          //get the info of the largest node in left subtree....
+        t->data = info;                         //....info is store where the target delete node is.
+        deleteItem(t->left, info);              //delete node with that was just obtain in getPredecessor
     }
 }
 
@@ -215,39 +214,41 @@ template<class ItemType>
 void BST_312 <ItemType>::getPredecessor(TreeNode* t, ItemType& data)
 {
 
-    while (t->right != NULL)
-        t = t->right;
+    while (t->right != NULL)            //the right (which contains the largest node) does not equal NULL
+        t = t->right;                   //continue going to the right
 
-    data = t->data;
+    data = t->data;                     //get the data of the largest in left subtree
 
 }
 
 
 template<class ItemType>
-void BST_312 <ItemType>::deleteItem(TreeNode*& t, const ItemType& newItem)
+void BST_312 <ItemType>::deleteItem(TreeNode*& t, const ItemType& newItem)  //transverse the tree from a starting node (t) to find the node that match the data to delete it
 {
     if (t == NULL)
-        return;
-    else if (newItem < t->data)
-        deleteItem(t->left, newItem);
-    else if (newItem > t->data)
-        deleteItem(t->right, newItem);
+        return;                                 //no need to transverse the tree
+    else if (newItem < t->data)                 //if data is smaller than current node, then...
+        deleteItem(t->left, newItem);           //...go to the left where smaller data is located
+    else if (newItem > t->data)                 //if data is larger than current node, then...
+        deleteItem(t->right, newItem);          //...go to the right where larger data is located
     else
-        deleteNode(t);
+        deleteNode(t);                          //found node to delete
 }
 
 
 template<class ItemType>
-void BST_312 <ItemType>::deleteItem(const ItemType& newItem)
+void BST_312 <ItemType>::deleteItem(const ItemType& newItem)        //transverse the tree, starting from the node, to delete node in tree containing newItem data.
 {
-    deleteItem(root, newItem);
+    deleteItem(root, newItem);              //call function to transverse the tree starting from node and then delete node with newItem data
 
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::makeEmpty(TreeNode*& t)
 {
-    //YOUR CODE GOES HERE
+  while(t->data!=NULL){         //while the root is not set as NULL
+      deleteNode(t);            //delete the children and root
+  }
 }
 
 template<class ItemType>
