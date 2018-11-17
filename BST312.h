@@ -285,17 +285,40 @@ bool BST_312 <ItemType>::isFull() const
 
 
 template<class ItemType>
-void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
-{
-
-    //YOUR CODE GOES HERE
-
+void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
+    if(!isFull()) {
+        if (newItem < t->data) {
+            if (t->left == NULL) {
+                TreeNode *goIn = new TreeNode;
+                goIn->data = newItem;
+                goIn->left = NULL;
+                goIn->right = NULL;
+                t->left = goIn;
+            } else { insertItem(t->left, newItem); }
+        } else if (newItem > t->data) {
+            if (t->right == NULL) {
+                TreeNode *goIn = new TreeNode;
+                goIn->data = newItem;
+                goIn->left = NULL;
+                goIn->right = NULL;
+                t->right = goIn;
+            } else { insertItem(t->right, newItem); }
+        }
+    }
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(const ItemType& newItem)
 {
-    //YOUR CODE GOES HERE
+    if(!isEmpty()) {
+        insertItem(root, newItem);
+    } else {
+        TreeNode *goIn = new TreeNode;
+        goIn->data = newItem;
+        goIn->left = NULL;
+        goIn->right = NULL;
+        root=goIn;
+    }
 }
 
 
@@ -311,7 +334,7 @@ int BST_312 <ItemType>::countNodes(TreeNode* t) const
 template<class ItemType>
 int BST_312 <ItemType>::countNodes()
 {
-    //YOUR CODE GOES HERE
+    countNodes(root);           //start counting from the root
 }
 
 template<class ItemType>
