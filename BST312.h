@@ -92,9 +92,9 @@ Postconditions: none
 /****************************
 inOrderTraversal
 
-Function: Returns the inOder (Left, Node, Right) as a vector of ItemTypes
-Preconditions: BST has been initialized.
-Postconditions: none
+//Function: Returns the inOder (Left, Node, Right) as a vector of ItemTypes
+//Preconditions: BST has been initialized.
+//Postconditions: none
 *****************************/
     vector<ItemType> inOrderTraversal();
 
@@ -127,20 +127,74 @@ private:
 
     TreeNode * root;
 
-
+//inserts an item to the binary tree
+//preconditions: must not insert the ones that are already in the binary tree
+//postcondition: none
     void insertItem(TreeNode*& t, const ItemType& newItem);
+
+//Function: Returns the inOder (Left, Node, Right) as a vector of ItemTypes
+//Preconditions: BST has been initialized
+//Postconditions: none
     void inOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
+
+ //   Function: Counts the number of nodes in the BST
+ //   Preconditions: BST has been initialized.
+ //   Postconditions: returns the number of nodes in the BST
     int countNodes(TreeNode* t) const;
+
+//    Function: Removes target from BST.
+//    Preconditions: BST has been initialized.
+//    Postconditions: If found, element has been removed from BST.
     void deleteNode(TreeNode*& node);
+
+//Function: Removes all the items from the BST.
+//Preconditions: BST has been initialized
+//Postconditions: All the items have been removed
     void makeEmpty(TreeNode*& t);
+
+//Function: Removes target from BST.
+//Preconditions: BST has been initialized.
+//Postconditions: If found, element has been removed from BST.
     void deleteItem(TreeNode*& t, const ItemType& newItem);
+
+//gets the largest number on the left subtree
+//preconditions: tree has been initialized
+//postconditions: saves the largest number on data
     void getPredecessor(TreeNode* t, ItemType& data);
+
+ //Function: Returns the preOder (Node, Left, Right) as a vector of ItemTypes
+ //Preconditions: BST has been initialized.
+ //Postconditions: none
     void preOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
+
+  //Function: returns the postOder (Left, Right, Node) as a vector of ItemTypes
+  //Preconditions: BST has been initialized.
+  //Postconditions: none
     void postOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
+
+ //Function: copies one tree onto a new one
+ //Preconditions: BST has been initialized.
+ //Postconditoins: none
     void copyTree(TreeNode*& copy, const TreeNode *originalTree);
+
+ //Function: Counts the number of nodes in the BST
+ //Preconditions: BST has been initialized.
+ //Postconditions: returns the number of nodes in the BST
     int countNodesHelper(TreeNode* t, int counter) const;
+
+//Function: Returns the preOder (Node, Left, Right) as a vector of ItemTypes
+//Preconditions: BST has been initialized.
+//Postconditions: none
     void preOrderHelper(TreeNode* t,vector<ItemType>& result) const;
+
+ //Function: Returns the inOder (Left, Node, Right) as a vector of ItemTypes
+ //Preconditions: BST has been initialized.
+ //Postconditions: none
     void inOrderHelper(TreeNode* t,vector<ItemType>& result) const;
+
+ //Function: returns the postOder (Left, Right, Node) as a vector of ItemTypes
+ //Preconditions: BST has been initialized.
+ //Postconditions: none
     void postOrderHelper(TreeNode* t,vector<ItemType>& result) const;
 };
 
@@ -297,7 +351,7 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
         goIn->right = NULL;             //set right pt
         t = goIn;                      //initialize root to new node
     }
-    if (!isFull()) {
+    else if (!isFull()) {
         if (newItem < t->data) {                //if item is less than current node
             if (t->left == NULL) {              //if you can insert a new node
                 TreeNode *goIn = new TreeNode;      //allocate space for node
