@@ -335,10 +335,10 @@ int BST_312 <ItemType>::countNodesHelper(TreeNode* t, int counter)const
         return counter;
     }
     if(t->left!=NULL){                                  //if left is not NULL then....
-        counter+=countNodesHelper(t->left, counter);    //..keep going left
+        counter=countNodesHelper(t->left, counter);    //..keep going left
     }
     if(t->right!=NULL){                                 //if right is not NULL then....
-        counter+=countNodesHelper(t->right, counter);   //..keep going right
+        counter=countNodesHelper(t->right, counter);   //..keep going right
     }
     counter++;                                          //once you finished going right and left increment counter
     return counter;                                     //return counter updated
@@ -434,18 +434,18 @@ vector<ItemType> BST_312 <ItemType>::inOrderTraversal()
 
 template<class ItemType>
 void BST_312 <ItemType>::postOrderHelper(TreeNode* t,vector<ItemType>& result) const{
-    if(t->left != NULL){
-        inOrderHelper(t->left, result);     //keep going left...
-        if(t->right!=NULL){             //goes right...
-            inOrderHelper(t->right, result);        //keeps going right and start checking left again
-            result.push_back(t->data);                //push the middle node after the left and right ones have been push
-            return;
-        }
-    }
-    else if (t->left == NULL){      //the last left children on that line...
-        result.push_back(t->data);        //gets push
+    if(t->left == NULL && t->right==NULL){
+        result.push_back(t->data);
         return;
     }
+    if(t->left != NULL){
+        postOrderHelper(t->left, result);     //keep going left...
+    }
+    if(t->right!=NULL){             //goes right...
+        postOrderHelper(t->right, result);        //keeps going right and start checking left again
+    }
+    result.push_back(t->data);
+    return;
 }
 
 template<class ItemType>
