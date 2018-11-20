@@ -290,7 +290,14 @@ bool BST_312 <ItemType>::isFull() const
 
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
-    if(!isFull()) {                             //if tree is not full
+    if (t==NULL) {                             //if tree is empty
+        TreeNode *goIn = new TreeNode;     //allocate space for node
+        goIn->data = newItem;           //set data
+        goIn->left = NULL;              //set left pt
+        goIn->right = NULL;             //set right pt
+        t = goIn;                      //initialize root to new node
+    }
+    if (!isFull()) {
         if (newItem < t->data) {                //if item is less than current node
             if (t->left == NULL) {              //if you can insert a new node
                 TreeNode *goIn = new TreeNode;      //allocate space for node
@@ -307,8 +314,7 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
                 goIn->right = NULL;             //initialize right pt of new node
                 t->right = goIn;                //link tree with node
             } else { insertItem(t->right, newItem); }       //else keep looking for a place to insert new node
-        }
-        else if (newItem == t->data){
+        } else if (newItem == t->data) {
             return;                             //if the same do nothing
         }
     }
@@ -317,15 +323,7 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(const ItemType& newItem)
 {
-    if(!isEmpty()) {                    //if tree is not empty insert the item recursively
-        insertItem(root, newItem);
-    } else {
-        TreeNode *goIn = new TreeNode;     //allocate space for node
-        goIn->data = newItem;           //set data
-        goIn->left = NULL;              //set left pt
-        goIn->right = NULL;             //set right pt
-        root=goIn;                      //initialize root to new node
-    }
+    insertItem(root, newItem);
 }
 
 template<class ItemType>
@@ -452,7 +450,7 @@ template<class ItemType>
 void BST_312 <ItemType>::postOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
     result.resize(0);                   //initialize vector
-    int nodesnumber=countNodes(t);      //count the number of nodes
+    int nodesnumber= countNodes(t);      //count the number of nodes
     if(nodesnumber==0){
         return;                         //base case
     } else {
@@ -471,11 +469,11 @@ vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 template<class ItemType>
 bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
 {
-    vector<ItemType> vectortree;
-    vectortree=postOrderTraversal();
+    vector<ItemType> vectortree;                //initialize vector
+    vectortree=postOrderTraversal();            //tranverse the tree
     int flag=0;
     for(flag=0; flag<vectortree.size(); flag++){
-        if(vectortree[flag]==item){
+        if(vectortree[flag]==item){             //use the vector from tranverse to check if item is in the vector
             return true;
         }
     }
