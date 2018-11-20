@@ -246,7 +246,7 @@ void BST_312 <ItemType>::deleteItem(const ItemType& newItem)        //transverse
 
 }
 
-//DOUBLE CHECK!!!!!!!!!!!!!
+
 template<class ItemType>
 void BST_312 <ItemType>::makeEmpty(TreeNode*& t)
 {
@@ -396,16 +396,16 @@ vector<ItemType> BST_312 <ItemType>::preOrderTraversal()
 
 template<class ItemType>
 void BST_312 <ItemType>::inOrderHelper(TreeNode* t,vector<ItemType>& result) const{
-    if(t->left == NULL && t->right==NULL){
+    if(t->left == NULL && t->right==NULL){          //when you reach a leave
         result.push_back(t->data);
         return;
     }
-    if(t->left != NULL){
-        inOrderHelper(t->left, result);
+    if(t->left != NULL){                            //go left and ...
+        inOrderHelper(t->left, result);             //...keep going left
     }
-    result.push_back(t->data);
-    if(t->right !=NULL){
-        inOrderHelper(t->right, result);
+    result.push_back(t->data);                      //push the middle node
+    if(t->right !=NULL){                            //go right and...
+        inOrderHelper(t->right, result);            // keep going right
     }
 }
 
